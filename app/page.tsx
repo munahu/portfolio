@@ -1,11 +1,53 @@
 "use client";
 
+import { MutableRefObject, useCallback, useRef } from "react";
+import Nav from "./components/Nav";
 import Project from "./components/Project";
 import { projects } from "./projects";
+import { useInView } from "react-intersection-observer";
+
+export type Section = "work" | "contact";
 
 export default function Home() {
+  const workRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+  const contactRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
+
+  const { ref: workInViewRef, inView: workInView } = useInView({
+    threshold: 0.2,
+  });
+
+  const { ref: contactInViewRef, inView: contactInView } = useInView({
+    threshold: 0.6,
+  });
+
+  const setRefs = useCallback(
+    (section: Section) => (node: HTMLDivElement | null) => {
+      const sectionRef = section === "work" ? workRef : contactRef;
+      const sectionInViewRef =
+        section === "work" ? workInViewRef : contactInViewRef;
+
+      sectionRef.current = node;
+      sectionInViewRef(node);
+    },
+    [workInViewRef, contactInViewRef]
+  );
+
+  const handleClick = (section: Section) => {
+    const sectionRef = section === "work" ? workRef : contactRef;
+    sectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest",
+    });
+  };
+
   return (
     <main className="bg-black text-white">
+      <Nav
+        handleClick={handleClick}
+        workInView={workInView}
+        contactInView={contactInView}
+      />
       <section className="flex flex-col justify-center text-center px-2">
         <h1 className="flex flex-col sm:flex-row justify-center mt-12 mb-2 py-4 lg:py-12 border-y border-white leading-[4.6rem] text-8xl sm:text-[110px] -tracking-[0.6rem] lg:text-[165px] lg:-tracking-[0.85rem] lg:text-center xl:text-[190px] font-bold sm:text-center">
           <span className="sm:mr-3">Muna</span>
@@ -20,32 +62,50 @@ export default function Home() {
           </p>
         </div>
       </section>
-      <section className="px-6 md:px-10 pt-10 sm:pt-20">
-        <ul>
+      <section ref={setRefs("work")} className="px-6 md:px-10 pt-10 sm:pt-20">
+        <SectionLabel text="work" />
+        <ul className="mt-10">
           {projects.map((project, index) => (
             <Project key={index} project={project} index={index} />
           ))}
         </ul>
       </section>
-      <section className="h-svh flex items-center justify-center">
-        <h2 className="text-4xl sm:text-7xl lg:text-9xl tracking-tighter font-semibold px-5 py-3 sm:px-10 sm:py-6 lg:px-14 lg:py-6 rounded-full border-2 sm:border-4 border-white flex items-center cursor-pointer">
-          <a href="mailto:munaaahu@gmail.com">Let&apos;s talk!</a>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.3}
-            stroke="currentColor"
-            className="size-8 sm:size-20 lg:size-28 ml-3 lg:ml-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-            />
-          </svg>
-        </h2>
+      <section
+        ref={setRefs("contact")}
+        className="h-svh px-6 md:px-10 pt-14 md:pt-20 pb-10 sm:pb-16 md:pb-28"
+      >
+        <div className="absolute">
+          <SectionLabel text="contact" />
+        </div>
+        <div className="flex items-center justify-center h-full">
+          <h2 className="text-4xl sm:text-7xl lg:text-9xl tracking-tighter font-semibold px-5 py-3 sm:px-10 sm:py-6 lg:px-14 lg:py-6 rounded-full border border-white uppercase flex items-center cursor-pointer">
+            <a href="mailto:munaaahu@gmail.com">Let&apos;s talk!</a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.3}
+              stroke="currentColor"
+              className="size-8 sm:size-20 lg:size-28 ml-3 lg:ml-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+              />
+            </svg>
+          </h2>
+        </div>
       </section>
     </main>
+  );
+}
+
+function SectionLabel({ text }: { text: string }) {
+  return (
+    <div className="relative bg-[#c6c6c61f] px-7 py-1.5 rounded-full cursor-pointer mr-4 w-fit capitalize">
+      <span className="absolute left-3 -top-2.5 text-[28px] font-black">.</span>
+      <span>{text}</span>
+    </div>
   );
 }
