@@ -48,18 +48,30 @@ export default function Home() {
         workInView={workInView}
         contactInView={contactInView}
       />
-      <section className="flex flex-col justify-center text-center px-2">
+      <section className="relative flex flex-col justify-center text-center px-2">
         <h1 className="flex flex-col sm:flex-row justify-center mt-12 mb-2 py-4 lg:py-12 border-y border-white leading-[4.6rem] text-8xl sm:text-[110px] -tracking-[0.6rem] lg:text-[165px] lg:-tracking-[0.85rem] lg:text-center xl:text-[190px] font-bold sm:text-center">
           <span className="sm:mr-3">Muna</span>
           <span>Hussen</span>
         </h1>
-        <div className="lg:flex justify-center">
-          <p className="text-sm lg:text-base font-medium lg:mr-4 tracking-tight uppercase mb-1">
+        <div className="lg:flex justify-center items-center">
+          <p className="text-sm lg:text-base font-medium lg:mr-4 tracking-tight uppercase">
             Frontend developer
           </p>
           <p className="text-sm lg:text-base font-light tracking-tight uppercase italic">
             Based in Montreal
           </p>
+        </div>
+        <div className="absolute bottom-1 left-6 sm:inset-x-0 flex flex-col items-start sm:flex-row sm:justify-between sm:px-12 text-xs lg:text-sm font-medium tracking-tight uppercase">
+          <a
+            target="_blank"
+            href="https://github.com/munahu"
+            className="hover:underline"
+          >
+            Github
+          </a>
+          <a href="mailto:munaaahu@gmail.com" className="hover:underline">
+            Email
+          </a>
         </div>
       </section>
       <section ref={setRefs("work")} className="px-6 md:px-10 pt-10 sm:pt-20">
