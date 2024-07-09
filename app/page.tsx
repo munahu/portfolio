@@ -48,18 +48,47 @@ export default function Home() {
   useGSAP(() => {
     gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-    gsap.to(mainRef.current, {
-      backgroundColor: "white",
-      color: "black",
-      scrollTrigger: {
-        trigger: workRef.current,
-        start: "top top",
-        end: "bottom center",
-        onLeave: () => gsap.set(mainRef.current, { clearProps: true }),
-        toggleActions: "play none restart reset",
-        invalidateOnRefresh: true,
+    let mm = gsap.matchMedia();
+
+    mm.add(
+      {
+        isMobile: "(max-width: 1023px)",
+        isDesktop: "(min-width: 1024px)",
       },
-    });
+      (context) => {
+        let { isDesktop } = context.conditions as gsap.Conditions;
+        gsap.to(mainRef.current, {
+          backgroundColor: "white",
+          color: "black",
+          scrollTrigger: {
+            trigger: workRef.current,
+            start: "top top",
+            end: "bottom center",
+            onLeave: () => gsap.set(mainRef.current, { clearProps: true }),
+            toggleActions: "play none restart reset",
+            invalidateOnRefresh: true,
+          },
+        });
+
+        const projects: HTMLLIElement[] = gsap.utils.toArray(".project");
+        if (isDesktop) {
+          projects.forEach((project) => {
+            const projectSelector = gsap.utils.selector(project);
+
+            const tl = gsap.timeline({
+              scrollTrigger: {
+                trigger: project,
+                start: "-50px top",
+                scrub: true,
+              },
+            });
+            tl.to(projectSelector("img"), {
+              scale: 1.1,
+            });
+          });
+        }
+      }
+    );
   });
 
   return (

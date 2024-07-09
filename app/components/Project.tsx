@@ -10,10 +10,10 @@ export default function Project({
 }) {
   const { image, title, description, links } = project;
   return (
-    <li className="mb-16 sm:mb-24 flex flex-col lg:flex-row lg:justify-between">
+    <li className="mb-16 sm:mb-24 flex flex-col lg:flex-row lg:justify-between project">
       <a
         target="_blank"
-        className="uppercase text-xs mr-3 border-b border-current mt-5 h-64 md:h-[700px] md:w-full lg:w-1/2"
+        className="uppercase text-xs mr-3 mt-5 h-64 md:h-[700px] md:w-full lg:w-1/2"
         href={links.live}
       >
         <Image
