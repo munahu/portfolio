@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import blog from "../public/blog.avif";
+import blog from "../public/blog.webp";
 import news from "../public/news.avif";
 import skincare from "../public/skincare.avif";
 
@@ -18,7 +18,7 @@ export const projects: Project[] = [
     image: blog,
     title: "Blog",
     description:
-      "Find blog posts, leave comments, and view more from the author.",
+      "Find blog posts, leave comments, and check out the author's profile.",
     links: {
       live: "https://mhblogapp.netlify.app",
       code: "https://github.com/munahu/blog-app",
@@ -38,7 +38,7 @@ export const projects: Project[] = [
     image: news,
     title: "News",
     description:
-      "Keep up with the latest news with a clean, beautiful interface.",
+      "Keep up with the latest news with this clean, beautiful interface.",
     links: {
       live: "https://mhnews.netlify.app",
       code: "https://github.com/munahu/news-app-v2",
