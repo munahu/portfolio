@@ -5,10 +5,14 @@ import Nav from "./components/Nav";
 import Project from "./components/Project";
 import { projects } from "./projects";
 import { useInView } from "react-intersection-observer";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export type Section = "work" | "contact";
 
 export default function Home() {
+  const mainRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const workRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const contactRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 
@@ -41,8 +45,25 @@ export default function Home() {
     });
   };
 
+  useGSAP(() => {
+    gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+    gsap.to(mainRef.current, {
+      backgroundColor: "white",
+      color: "black",
+      scrollTrigger: {
+        trigger: workRef.current,
+        start: "top top",
+        end: "bottom center",
+        onLeave: () => gsap.set(mainRef.current, { clearProps: true }),
+        toggleActions: "play none restart reset",
+        invalidateOnRefresh: true,
+      },
+    });
+  });
+
   return (
-    <main className="bg-black text-white">
+    <main ref={mainRef} className="bg-black text-white">
       <Nav
         handleClick={handleClick}
         workInView={workInView}
@@ -90,7 +111,7 @@ export default function Home() {
           <SectionLabel text="contact" />
         </div>
         <div className="flex items-center justify-center h-full">
-          <h2 className="text-4xl sm:text-7xl lg:text-9xl tracking-tighter font-semibold px-5 py-3 sm:px-10 sm:py-6 lg:px-14 lg:py-6 rounded-full border border-white uppercase flex items-center cursor-pointer">
+          <h2 className="text-4xl sm:text-7xl lg:text-9xl tracking-tighter font-semibold px-5 py-3 sm:px-10 sm:py-6 lg:px-14 lg:py-6 rounded-full border border-current uppercase flex items-center cursor-pointer">
             <a href="mailto:munaaahu@gmail.com">Let&apos;s talk!</a>
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -17,7 +17,7 @@ export default function Project({
         alt={title}
       />
       <div className="order-first lg:order-last lg:flex flex-col justify-center lg:w-1/2 lg:pl-20 xl:pl-32">
-        <h2 className="relative text-4xl md:text-5xl lg:text-7xl xl:text-8xl mb-2 lg:mb-4 tracking-tight font-bold uppercase flex text-neutral-200">
+        <h2 className="relative text-4xl md:text-5xl lg:text-7xl xl:text-8xl mb-2 lg:mb-4 tracking-tight font-bold uppercase flex">
           <span className="mr-2 text-sm font-light tracking-normal hidden lg:block absolute top-2 -left-8">
             00{index + 1}
           </span>
@@ -29,14 +29,14 @@ export default function Project({
         <div className="lg:pl-2">
           <a
             target="_blank"
-            className="uppercase text-xs mr-3 border-b border-white"
+            className="uppercase text-xs mr-3 border-b border-current"
             href={links.live}
           >
             Live project
           </a>
           <a
             target="_blank"
-            className="uppercase text-xs border-b border-white"
+            className="uppercase text-xs border-b border-current"
             href={links.code}
           >
             View code
