@@ -15,16 +15,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    image: blog,
-    title: "Blog",
-    description:
-      "Find blog posts, leave comments, and check out the author's profile.",
-    links: {
-      live: "https://mhblogapp.netlify.app",
-      code: "https://github.com/munahu/blog-app",
-    },
-  },
-  {
     image: skincare,
     title: "Skincare",
     description:
@@ -42,6 +32,16 @@ export const projects: Project[] = [
     links: {
       live: "https://mhnews.netlify.app",
       code: "https://github.com/munahu/news-app-v2",
+    },
+  },
+  {
+    image: blog,
+    title: "Blog",
+    description:
+      "Find blog posts, leave comments, and check out the author's profile.",
+    links: {
+      live: "https://mhblogapp.netlify.app",
+      code: "https://github.com/munahu/blog-app",
     },
   },
 ];
