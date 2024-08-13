@@ -31,7 +31,7 @@ export const projects: Project[] = [
       "Keep up with the latest news with this clean, beautiful interface.",
     links: {
       live: "https://mhnews.netlify.app",
-      code: "https://github.com/munahu/news-app-v2",
+      code: "https://github.com/munahu/news-app",
     },
   },
   {
